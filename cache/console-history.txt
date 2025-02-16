@@ -1,0 +1,2 @@
+await ethers.getContractFactory("Lock")
+ethers
