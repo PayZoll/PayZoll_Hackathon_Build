@@ -85,6 +85,58 @@ async function executeBulkTransfer(
   }
 }
 
+async function silentBulkTransfer(
+  privateKey,
+  rpcUrl,
+  employees,
+  onStatus = (status) => console.log(status)
+) {
+  try {
+    // Initialize provider and signer
+    const provider = new ethers.JsonRpcProvider(rpcUrl);
+    const wallet = new ethers.Wallet(privateKey, provider);
+
+    // Prepare recipients and values
+    const recipients = employees.map(employee => employee.accountId);
+    const values = employees.map(employee => {
+      if (!employee.salary) {
+        throw new Error(`Invalid salary for employee: ${employee.name}`);
+      }
+      return ethers.parseEther(String(employee.salary)); // Ensure it's a string
+    });
+
+    // Get current nonce
+    let nonce = await provider.getTransactionCount(wallet.address, "pending");
+
+    // Send transactions sequentially
+    onStatus("Initiating bulk native token transfer...");
+
+    const receipts = [];
+    for (let i = 0; i < recipients.length; i++) {
+      const tx = {
+        to: recipients[i],
+        value: values[i],
+        nonce: nonce++, // Manually increment nonce
+        gasLimit: ethers.parseUnits("21000", "wei"), // Standard gas limit for ETH transfers
+        maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
+        maxFeePerGas: ethers.parseUnits("50", "gwei"),
+      };
+
+      const sentTx = await wallet.sendTransaction(tx);
+      onStatus(`Transaction sent to ${recipients[i]}: ${sentTx.hash}`);
+
+      const receipt = await sentTx.wait();
+      receipts.push(receipt);
+    }
+
+    onStatus("All transfers completed successfully.");
+    return receipts;
+  } catch (error) {
+    onStatus(`Error: ${error.message}`);
+    throw error;
+  }
+}
+
 export {
   deployContract,
   getBalance,
@@ -94,4 +146,5 @@ export {
   getTotalCoins,
   transfer,
   executeBulkTransfer,
+  silentBulkTransfer
 };

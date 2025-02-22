@@ -85,9 +85,147 @@ export const Web3Provider = ({ children }) => {
     };
   }, []);
 
+  // Function to switch or add a new chain
+
+  // chainData structure
+  // create a chain.ts file to keept this data
+  /*
+interface ChainData {
+  chainId: string;
+  chainName: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  rpcUrls: string[];
+  blockExplorerUrls: string[];
+}
+
+const chains: Record<string, ChainData> = {
+  ethereum: {
+    chainId: "0x1",
+    chainName: "Ethereum Mainnet",
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID"],
+    blockExplorerUrls: ["https://etherscan.io/"],
+  },
+  polygon: {
+    chainId: "0x89",
+    chainName: "Polygon Mainnet",
+    nativeCurrency: {
+      name: "MATIC",
+      symbol: "MATIC",
+      decimals: 18,
+    },
+    rpcUrls: ["https://polygon-rpc.com/"],
+    blockExplorerUrls: ["https://polygonscan.com/"],
+  },
+  bsc: {
+    chainId: "0x38",
+    chainName: "Binance Smart Chain Mainnet",
+    nativeCurrency: {
+      name: "Binance Coin",
+      symbol: "BNB",
+      decimals: 18,
+    },
+    rpcUrls: ["https://bsc-dataseed.binance.org/"],
+    blockExplorerUrls: ["https://bscscan.com/"],
+  },
+  arbitrum: {
+    chainId: "0xa4b1",
+    chainName: "Arbitrum One",
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["https://arb1.arbitrum.io/rpc"],
+    blockExplorerUrls: ["https://arbiscan.io/"],
+  },
+  optimism: {
+    chainId: "0xa",
+    chainName: "Optimism",
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["https://mainnet.optimism.io/"],
+    blockExplorerUrls: ["https://optimistic.etherscan.io/"],
+  },
+  sepolia: {
+    chainId: "0xaa36a7",
+    chainName: "Ethereum Sepolia",
+    nativeCurrency: {
+      name: "Sepolia ETH",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.sepolia.org"],
+    blockExplorerUrls: ["https://sepolia.etherscan.io/"],
+  },
+  mumbai: {
+    chainId: "0x13881",
+    chainName: "Polygon Mumbai Testnet",
+    nativeCurrency: {
+      name: "MATIC",
+      symbol: "MATIC",
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+  },
+  bscTestnet: {
+    chainId: "0x61",
+    chainName: "Binance Smart Chain Testnet",
+    nativeCurrency: {
+      name: "Binance Coin",
+      symbol: "BNB",
+      decimals: 18,
+    },
+    rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+    blockExplorerUrls: ["https://testnet.bscscan.com/"],
+  },
+};
+
+export default chains;
+
+
+  */
+  const switchOrAddChain = async (chainId, chainData) => {
+    if (!window.ethereum) {
+      console.error("Ethereum provider not found.");
+      return;
+    }
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: ethers.toBeHex(chainId) }],
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [chainData],
+          });
+        } catch (addError) {
+          console.error("Failed to add new chain: ", addError);
+        }
+      } else {
+        console.error("Failed to switch chain: ", switchError);
+      }
+    }
+  };
+
   return (
     <Web3Context.Provider
-      value={{ provider, signer, account, network, balance }}
+      value={{ provider, signer, account, network, balance, switchOrAddChain }}
     >
       {children}
     </Web3Context.Provider>

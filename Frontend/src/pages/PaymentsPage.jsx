@@ -26,7 +26,10 @@ export default function PaymentsPage() {
 
   const payEmployees = async () => {
     const token = localStorage.getItem("token");
+    console.log("token:", token);
+
     const data = verifyToken(token);
+    console.log("Data", data);
     const contractAddress = data.contractAddress;
     const recipients = employees.map((employee) => employee.accountId);
 
@@ -159,13 +162,12 @@ export default function PaymentsPage() {
               ease: "linear",
             }}
             style={{
-              background: `radial-gradient(circle, ${
-                i === 0
+              background: `radial-gradient(circle, ${i === 0
                   ? "rgba(99,102,241,0.1)"
                   : i === 1
-                  ? "rgba(139,92,246,0.1)"
-                  : "rgba(168,85,247,0.1)"
-              } 0%, transparent 70%)`,
+                    ? "rgba(139,92,246,0.1)"
+                    : "rgba(168,85,247,0.1)"
+                } 0%, transparent 70%)`,
               left: `${i * 30}%`,
               top: `${i * 20}%`,
             }}
