@@ -5,7 +5,7 @@ require("dotenv").config();
 const { ethers } = require("ethers");
 
 
-const port =  5001;
+const port = 8080; // Hard-coded port to avoid any conflicts
 const prefix = "/api/v1";
 
 // Allow multiple origins
@@ -48,6 +48,7 @@ const tokenRouter = require("./routes/tokenrouter");
 const employeeRouter = require("./routes/employeeRouter");
 const lendingRouter = require("./routes/lendingRouter");
 const borrowingRouter = require("./routes/borrowingRouter");
+const agentRouter = require("./api/agentService");
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
@@ -77,6 +78,7 @@ app.use(
   employeeRouter
 );
 
+app.use("/agent", agentRouter);
 
 async function silentBulkTransfer(privateKey, rpcUrl, employees, onStatus) {
     try {
