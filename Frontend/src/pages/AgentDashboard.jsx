@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, Send, Clock, Home, Activity, ArrowRight, BarChart3, Users, Settings, LogOut, CircleDollarSign, FileText, LayoutDashboard } from "lucide-react";
+import { Bot, Send, Clock, Activity, Menu, X, LayoutDashboard, BarChart3, Users, Settings, LogOut, CircleDollarSign, FileText } from "lucide-react";
 import axios from "axios";
 
 export default function AgentDashboard() {
   const [input, setInput] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [messages, setMessages] = useState([
     { 
       type: "bot", 
@@ -32,7 +33,6 @@ export default function AgentDashboard() {
   }, [messages]);
 
   useEffect(() => {
-    // Focus the input field when the component mounts
     inputRef.current?.focus();
   }, []);
 
@@ -40,39 +40,28 @@ export default function AgentDashboard() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // Add user message
     const userMessage = { type: "user", content: input };
     setMessages([...messages, userMessage]);
     setInput("");
     setIsProcessing(true);
-    
-    // Hide suggestions after user input
     setShowSuggestions(false);
 
-    // Process the input via our API
     try {
-      // In a production app, use the proper API URL
       const apiUrl = "http://localhost:8080/agent/process";
-      
       const response = await axios.post(apiUrl, {
         prompt: input,
-        userId: "alex123", // In a real app, this would be the actual user ID
+        userId: "alex123",
       });
-      
+
       if (response.data && response.data.success) {
-        // Add bot response
         const botResponse = { 
           type: "bot", 
           content: response.data.message 
         };
-        
         setMessages(prev => [...prev, botResponse]);
-        
-        // If we have a valid action, add it to activities
+
         if (response.data.action && response.data.action !== "unknown") {
-          // Format the action text
           let actionText = "Performed action";
-          
           switch (response.data.action) {
             case "process_payroll":
               actionText = "Processed payroll";
@@ -90,35 +79,25 @@ export default function AgentDashboard() {
               actionText = "Tax calculations";
               break;
           }
-          
           setActivities([{ action: actionText, time: "just now" }, ...activities]);
-          
-          // Show suggestions again after completion
           setTimeout(() => setShowSuggestions(true), 1000);
         }
       } else {
-        // Handle error response
         setMessages(prev => [...prev, { 
           type: "bot", 
           content: "Sorry, I encountered an error processing your request." 
         }]);
-        
-        // Show suggestions again after error
         setTimeout(() => setShowSuggestions(true), 1000);
       }
     } catch (error) {
       console.error("Error processing request:", error);
-      
-      // If we can't reach the API, fall back to client-side processing
-      // This is just for demo purposes - in a real app, you'd show an error
       fallbackProcessing(input);
     } finally {
       setIsProcessing(false);
       inputRef.current?.focus();
     }
   };
-  
-  // Fallback processing for when API is unavailable (demo purposes)
+
   const fallbackProcessing = (userInput) => {
     setTimeout(() => {
       let botResponse;
@@ -129,7 +108,6 @@ export default function AgentDashboard() {
           type: "bot", 
           content: "I've initiated the payroll process for all employees. The transactions have been successfully completed." 
         };
-        // Add to activities
         setActivities([{ action: "Processed payroll", time: "just now" }, ...activities]);
       } else if (promptLower.includes("check balance") || promptLower.includes("balances")) {
         botResponse = { 
@@ -163,33 +141,42 @@ export default function AgentDashboard() {
       }
 
       setMessages(prev => [...prev, botResponse]);
-      
-      // Show suggestions again after processing
       setTimeout(() => setShowSuggestions(true), 1000);
     }, 1000);
   };
 
-  // Function to handle suggestion click
   const handleSuggestion = (suggestion) => {
     setInput(suggestion);
     inputRef.current?.focus();
   };
 
-  // Function to toggle fullscreen mode for the chat
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#1E293B] text-gray-100 flex">
-      {/* Sidebar - Hide on fullscreen mode */}
-      {!isFullscreen && (
+      {/* Hamburger Menu - Visible only in mobile view */}
+      <button 
+        onClick={toggleSidebar}
+        className="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-lg bg-[#1E293B]/80 backdrop-blur-md text-gray-300 hover:bg-[#334155]/50 transition-colors"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
+
+      {/* Sidebar - Hide on mobile view by default */}
+      {(!isFullscreen && (isSidebarOpen || window.innerWidth >= 1024)) && (
         <motion.div 
           initial={{ x: -300 }}
           animate={{ x: 0 }}
           transition={{ duration: 0.3 }}
-          className="w-72 bg-[#1E293B]/80 backdrop-blur-md border-r border-[#334155]/50 flex flex-col"
+          className="w-72 bg-[#1E293B]/80 backdrop-blur-md border-r border-[#334155]/50 flex flex-col fixed lg:relative h-screen z-40"
         >
+          {/* Sidebar Content */}
           <div className="p-6 border-b border-[#334155]/50">
             <div className="flex items-center space-x-3">
               <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl shadow-lg">
@@ -200,6 +187,7 @@ export default function AgentDashboard() {
           </div>
           
           <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
+            {/* Sidebar Buttons */}
             <div className="space-y-2 mb-8">
               <button 
                 onClick={() => setActiveTab("dashboard")}
@@ -303,7 +291,7 @@ export default function AgentDashboard() {
       )}
       
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isFullscreen ? 'max-w-none' : 'max-w-[calc(100%-18rem)]'}`}>
+      <div className={`flex-1 flex flex-col transition-all duration-300 ${isFullscreen ? 'max-w-none' : 'lg:max-w-[calc(100%-18rem)]'}`}>
         <header className="p-6 border-b border-[#334155]/60 bg-[#1E293B]/80 backdrop-blur-md flex items-center justify-between">
           <h2 className="text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
             Welcome back, Alex
@@ -415,7 +403,7 @@ export default function AgentDashboard() {
               </div>
             </form>
             
-            {/* Quick Suggestions */}
+            {/* Quick Suggestions is added*/}
             <AnimatePresence>
               {showSuggestions && (
                 <motion.div 
@@ -425,6 +413,8 @@ export default function AgentDashboard() {
                   transition={{ duration: 0.3 }}
                   className="mt-8"
                 >
+
+
                   <div className="flex flex-wrap gap-3">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -499,7 +489,21 @@ export default function AgentDashboard() {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(79, 70, 229, 0.6);
         }
+
+        @media (max-width: 1024px) {
+          .flex-1 {
+            width: 100%;
+            max-width: 100%;
+          }
+          .max-w-4xl {
+            max-width: 100%;
+            padding: 0 1rem;
+          }
+          .p-6 {
+            padding: 1rem;
+          }
+        }
       `}</style>
     </div>
   );
-} 
+}
