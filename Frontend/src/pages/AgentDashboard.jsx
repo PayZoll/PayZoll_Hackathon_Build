@@ -403,7 +403,7 @@ export default function AgentDashboard() {
               </div>
             </form>
             
-            {/* Quick Suggestions */}
+            {/* Quick Suggestions is added*/}
             <AnimatePresence>
               {showSuggestions && (
                 <motion.div 
@@ -413,6 +413,8 @@ export default function AgentDashboard() {
                   transition={{ duration: 0.3 }}
                   className="mt-8"
                 >
+
+
                   <div className="flex flex-wrap gap-3">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
