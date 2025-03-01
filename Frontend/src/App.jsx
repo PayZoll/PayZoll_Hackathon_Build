@@ -11,7 +11,6 @@ import SettingsPage from "./pages/SettingsPage";
 import { Web3Provider } from "./context/useWeb3";
 import LendingPage from "./pages/LendingPage";
 import SonicTestPage from "./pages/SonicTestPage";
-import AgentDashboard from "./pages/AgentDashboard";
 
 export default function App() {
   const EmployerRoutes = () => (
@@ -26,7 +25,6 @@ export default function App() {
         <Route path="/employer/settings" element={<SettingsPage />} />
         <Route path="/lending" element={<LendingPage />} />
         <Route path="/sonic" element={<SonicTestPage />} />
-        <Route path="/agent" element={<AgentDashboard />} />
       </Routes>
     </Web3Provider>
   );
