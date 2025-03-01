@@ -34,11 +34,17 @@ export default function Sidebar({
     <aside className="fixed left-0 top-0 h-screen w-64 bg-crypto-card border-r border-gray-800">
       <div className="flex flex-col h-full">
         {/* Company Name */}
-        <div className="p-6 border-b border-gray-800">
+        <div className="p-6 border-b border-gray-800 flex flex-col gap-y-3">
           <Link to="/employer/dashboard" className="block">
             <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
               PayZoll
             </h1>
+          </Link>
+          <Link
+            to="/sonic"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg hover:shadow-indigo-500/20 transition-all"
+          >
+            SonicAI
           </Link>
         </div>
 
@@ -50,11 +56,10 @@ export default function Sidebar({
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all group relative ${
-                  isActive
-                    ? "text-white bg-indigo-500/10 border border-indigo-500/50"
-                    : "text-gray-400 hover:text-white hover:bg-white/5"
-                }`}
+                className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all group relative ${isActive
+                  ? "text-white bg-indigo-500/10 border border-indigo-500/50"
+                  : "text-gray-400 hover:text-white hover:bg-white/5"
+                  }`}
               >
                 {isActive && (
                   <motion.div
@@ -63,9 +68,8 @@ export default function Sidebar({
                   />
                 )}
                 <item.icon
-                  className={`w-5 h-5 ${
-                    isActive ? "text-indigo-400" : "group-hover:text-indigo-400"
-                  }`}
+                  className={`w-5 h-5 ${isActive ? "text-indigo-400" : "group-hover:text-indigo-400"
+                    }`}
                 />
                 <span className="relative">{item.label}</span>
               </Link>
