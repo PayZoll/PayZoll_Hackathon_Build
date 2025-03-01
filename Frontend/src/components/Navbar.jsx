@@ -27,12 +27,6 @@ export default function Navbar() {
             >
               Features
             </a>
-            <Link
-              to="/agent"
-              className="text-gray-400 hover:text-indigo-400 transition-colors"
-            >
-              PayZoll Agent
-            </Link>
             <a
               href="#how-it-works"
               className="text-gray-400 hover:text-indigo-400 transition-colors"
