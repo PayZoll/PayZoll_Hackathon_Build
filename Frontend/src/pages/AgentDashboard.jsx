@@ -6,6 +6,7 @@ import axios from "axios";
 export default function AgentDashboard() {
   const [input, setInput] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [messages, setMessages] = useState([
     { 
       type: "bot", 
@@ -35,6 +36,45 @@ export default function AgentDashboard() {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    // Set initial large screen state
+    const checkScreenSize = () => {
+      const isLarge = window.innerWidth >= 1024;
+      setIsLargeScreen(isLarge);
+      
+      // On large screens, show sidebar by default unless in fullscreen mode
+      if (isLarge && !isFullscreen) {
+        setIsSidebarOpen(true);
+      }
+    };
+    
+    // Run on mount
+    checkScreenSize();
+    
+    // Add resize listener
+    const handleResize = () => {
+      const isLarge = window.innerWidth >= 1024;
+      const wasLarge = isLargeScreen;
+      
+      if (isLarge !== wasLarge) {
+        setIsLargeScreen(isLarge);
+        
+        // If transitioning to large screen and not in fullscreen
+        if (isLarge && !isFullscreen) {
+          setIsSidebarOpen(true);
+        }
+        
+        // If transitioning to small screen
+        if (!isLarge && wasLarge) {
+          setIsSidebarOpen(false);
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isFullscreen, isLargeScreen]); // Re-run when fullscreen mode or screen size changes
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -155,147 +195,180 @@ export default function AgentDashboard() {
   };
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+    setIsSidebarOpen(prev => !prev);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#1E293B] text-gray-100 flex">
-      {/* Hamburger Menu - Visible only in mobile view */}
-      <button 
-        onClick={toggleSidebar}
-        className="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-lg bg-[#1E293B]/80 backdrop-blur-md text-gray-300 hover:bg-[#334155]/50 transition-colors"
-      >
-        <Menu className="w-6 h-6" />
-      </button>
+    <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#1E293B] text-gray-100 flex overflow-hidden">
+      {/* Mobile overlay when sidebar is open */}
+      {isSidebarOpen && !isLargeScreen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
 
-      {/* Sidebar - Hide on mobile view by default */}
-      {(!isFullscreen && (isSidebarOpen || window.innerWidth >= 1024)) && (
-        <motion.div 
-          initial={{ x: -300 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.3 }}
-          className="w-72 bg-[#1E293B]/80 backdrop-blur-md border-r border-[#334155]/50 flex flex-col fixed lg:relative h-screen z-40"
-        >
-          {/* Sidebar Content */}
-          <div className="p-6 border-b border-[#334155]/50">
-            <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl shadow-lg">
-                <Bot className="w-7 h-7 text-white" />
+      {/* Sidebar - Fixed position */}
+      <AnimatePresence>
+        {(!isFullscreen && (isSidebarOpen || isLargeScreen)) && (
+          <motion.div 
+            initial={!isLargeScreen ? { x: -300 } : { x: 0 }}
+            animate={{ x: 0 }}
+            exit={!isLargeScreen ? { x: -300 } : { x: 0 }}
+            transition={{ duration: 0.3 }}
+            className={`${!isLargeScreen ? 'w-[85%] max-w-[300px]' : 'w-72'} bg-[#1E293B]/95 backdrop-blur-md border-r border-[#334155]/50 flex flex-col fixed top-0 left-0 bottom-0 h-screen z-50 overflow-hidden`}
+          >
+            {/* Close button - Mobile only */}
+            {!isLargeScreen && (
+              <button 
+                onClick={toggleSidebar}
+                className="absolute top-4 right-4 p-2 rounded-lg bg-[#334155]/50 text-gray-300 hover:bg-[#334155]/70 transition-colors lg:hidden"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Sidebar header */}
+            <div className="p-6 border-b border-[#334155]/50 shrink-0">
+              <div className="flex items-center space-x-3">
+                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl shadow-lg">
+                  <Bot className="w-7 h-7 text-white" />
+                </div>
+                <h1 className="text-xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">PayZoll Agent</h1>
               </div>
-              <h1 className="text-xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">PayZoll Agent</h1>
-            </div>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
-            {/* Sidebar Buttons */}
-            <div className="space-y-2 mb-8">
-              <button 
-                onClick={() => setActiveTab("dashboard")}
-                className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
-                  activeTab === "dashboard" 
-                    ? "bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-md shadow-indigo-900/20 text-white" 
-                    : "hover:bg-[#334155]/50 text-gray-300"
-                }`}
-              >
-                <LayoutDashboard className="w-5 h-5" />
-                <span>Dashboard</span>
-              </button>
-              
-              <button 
-                onClick={() => setActiveTab("activity")}
-                className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
-                  activeTab === "activity" 
-                    ? "bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-md shadow-indigo-900/20 text-white" 
-                    : "hover:bg-[#334155]/50 text-gray-300"
-                }`}
-              >
-                <Activity className="w-5 h-5" />
-                <span>Activity History</span>
-              </button>
-              
-              <button 
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
-              >
-                <Users className="w-5 h-5" />
-                <span>Employees</span>
-              </button>
-              
-              <button 
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
-              >
-                <CircleDollarSign className="w-5 h-5" />
-                <span>Payments</span>
-              </button>
-              
-              <button 
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
-              >
-                <FileText className="w-5 h-5" />
-                <span>Reports</span>
-              </button>
-              
-              <button 
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
-              >
-                <BarChart3 className="w-5 h-5" />
-                <span>Analytics</span>
-              </button>
             </div>
             
-            <div className="mt-6 mb-4">
-              <h3 className="text-gray-400 text-sm font-medium px-3 mb-2 flex items-center">
-                <Clock className="w-3.5 h-3.5 mr-2 opacity-70" /> 
-                Recent Activities
-              </h3>
-              <div className="space-y-2.5">
-                {activities.map((activity, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="bg-[#334155]/60 hover:bg-[#334155]/80 transition-colors duration-200 backdrop-blur-sm rounded-lg p-3 text-sm"
-                  >
-                    <div className="flex items-start">
-                      <div className="min-w-2 h-2 rounded-full bg-emerald-500 mt-1.5 mr-2"></div>
-                      <div>
-                        <p className="text-white font-medium">{activity.action}</p>
-                        <p className="text-gray-400 text-xs flex items-center mt-1">
-                          <Clock className="w-3 h-3 mr-1 opacity-70" /> {activity.time}
-                        </p>
+            {/* Sidebar scrollable content */}
+            <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
+              {/* Sidebar Buttons */}
+              <div className="space-y-2 mb-8">
+                <button 
+                  onClick={() => setActiveTab("dashboard")}
+                  className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
+                    activeTab === "dashboard" 
+                      ? "bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-md shadow-indigo-900/20 text-white" 
+                      : "hover:bg-[#334155]/50 text-gray-300"
+                  }`}
+                >
+                  <LayoutDashboard className="w-5 h-5" />
+                  <span>Dashboard</span>
+                </button>
+                
+                <button 
+                  onClick={() => setActiveTab("activity")}
+                  className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
+                    activeTab === "activity" 
+                      ? "bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-md shadow-indigo-900/20 text-white" 
+                      : "hover:bg-[#334155]/50 text-gray-300"
+                  }`}
+                >
+                  <Activity className="w-5 h-5" />
+                  <span>Activity History</span>
+                </button>
+                
+                <button 
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
+                >
+                  <Users className="w-5 h-5" />
+                  <span>Employees</span>
+                </button>
+                
+                <button 
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
+                >
+                  <CircleDollarSign className="w-5 h-5" />
+                  <span>Payments</span>
+                </button>
+                
+                <button 
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
+                >
+                  <FileText className="w-5 h-5" />
+                  <span>Reports</span>
+                </button>
+                
+                <button 
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-[#334155]/50 text-gray-300 transition-all duration-200"
+                >
+                  <BarChart3 className="w-5 h-5" />
+                  <span>Analytics</span>
+                </button>
+              </div>
+              
+              <div className="mt-6 mb-4">
+                <h3 className="text-gray-400 text-sm font-medium px-3 mb-2 flex items-center">
+                  <Clock className="w-3.5 h-3.5 mr-2 opacity-70" /> 
+                  Recent Activities
+                </h3>
+                <div className="space-y-2.5">
+                  {activities.map((activity, index) => (
+                    <motion.div 
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      className="bg-[#334155]/60 hover:bg-[#334155]/80 transition-colors duration-200 backdrop-blur-sm rounded-lg p-3 text-sm"
+                    >
+                      <div className="flex items-start">
+                        <div className="min-w-2 h-2 rounded-full bg-emerald-500 mt-1.5 mr-2"></div>
+                        <div>
+                          <p className="text-white font-medium">{activity.action}</p>
+                          <p className="text-gray-400 text-xs flex items-center mt-1">
+                            <Clock className="w-3 h-3 mr-1 opacity-70" /> {activity.time}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
+            
+            {/* Sidebar footer */}
+            <div className="p-4 border-t border-[#334155]/50 shrink-0">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">
+                    A
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-white">Alex Johnson</p>
+                    <p className="text-xs text-gray-400">Admin</p>
+                  </div>
+                </div>
+                <button className="text-gray-400 hover:text-white transition-colors">
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Main Content Area */}
+      <div 
+        className={`flex-1 flex flex-col h-screen w-full transition-all duration-300 ${
+          !isFullscreen && isLargeScreen ? 'lg:pl-72' : ''
+        }`}
+      >
+        {/* Fixed header */}
+        <header className="p-6 border-b border-[#334155]/60 bg-[#1E293B]/80 backdrop-blur-md flex items-center justify-between sticky top-0 z-10">
+          <div className="flex items-center">
+            {/* Hamburger menu for mobile */}
+            {!isLargeScreen && (
+              <button 
+                onClick={toggleSidebar}
+                className="p-2.5 rounded-lg bg-[#334155]/70 text-white hover:bg-[#334155] transition-colors mr-4"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+            )}
+            
+            <h2 className="text-xl md:text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+              Welcome back, Alex
+            </h2>
           </div>
           
-          <div className="p-4 border-t border-[#334155]/50">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">
-                  A
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-white">Alex Johnson</p>
-                  <p className="text-xs text-gray-400">Admin</p>
-                </div>
-              </div>
-              <button className="text-gray-400 hover:text-white transition-colors">
-                <LogOut className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      )}
-      
-      {/* Main Content */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isFullscreen ? 'max-w-none' : 'lg:max-w-[calc(100%-18rem)]'}`}>
-        <header className="p-6 border-b border-[#334155]/60 bg-[#1E293B]/80 backdrop-blur-md flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
-            Welcome back, Alex
-          </h2>
           <div className="flex items-center space-x-4">
             <button 
               onClick={toggleFullscreen}
@@ -323,6 +396,7 @@ export default function AgentDashboard() {
           </div>
         </header>
         
+        {/* Scrollable main content */}
         <div className="flex-1 p-6 overflow-y-auto custom-scrollbar">
           <div className="max-w-4xl mx-auto">
             <div className="space-y-6 mb-4 pb-2">
@@ -413,8 +487,6 @@ export default function AgentDashboard() {
                   transition={{ duration: 0.3 }}
                   className="mt-8"
                 >
-
-
                   <div className="flex flex-wrap gap-3">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -474,6 +546,12 @@ export default function AgentDashboard() {
       </div>
       
       <style jsx>{`
+        @media (max-width: 1024px) {
+          body {
+            overflow: ${isSidebarOpen ? 'hidden' : 'auto'};
+          }
+        }
+        
         .custom-scrollbar::-webkit-scrollbar {
           width: 5px;
           height: 5px;
@@ -488,20 +566,6 @@ export default function AgentDashboard() {
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(79, 70, 229, 0.6);
-        }
-
-        @media (max-width: 1024px) {
-          .flex-1 {
-            width: 100%;
-            max-width: 100%;
-          }
-          .max-w-4xl {
-            max-width: 100%;
-            padding: 0 1rem;
-          }
-          .p-6 {
-            padding: 1rem;
-          }
         }
       `}</style>
     </div>
