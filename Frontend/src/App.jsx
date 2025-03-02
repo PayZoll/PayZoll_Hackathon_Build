@@ -24,6 +24,7 @@ export default function App() {
         <Route path="/employer/payments" element={<PaymentsPage />} />
         <Route path="/employer/esops" element={<ESOPPage />} />
         <Route path="/employer/settings" element={<SettingsPage />} />
+        <Route path="/employer/agent" element={<AgentDashboard />} />
         <Route path="/lending" element={<LendingPage />} />
         <Route path="/sonic" element={<SonicTestPage />} />
         <Route path="/agent" element={<AgentDashboard />} />

@@ -8,12 +8,14 @@ import {
   Award,
   Settings,
   LogOut,
+  Bot,
 } from "lucide-react";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/employer/dashboard" },
   { icon: Users, label: "Employees", path: "/employer/employees" },
   { icon: BadgeDollarSign, label: "Payments", path: "/employer/payments" },
+  { icon: Bot, label: "PayZoll Agent", path: "/employer/agent" },
   { icon: Award, label: "ESOPS/RSU", path: "/employer/esops" },
   { icon: Settings, label: "Settings", path: "/employer/settings" },
 ];
