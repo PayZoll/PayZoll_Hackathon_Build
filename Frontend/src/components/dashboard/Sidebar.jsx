@@ -8,6 +8,7 @@ import {
   Award,
   Settings,
   LogOut,
+  Bot,
 } from "lucide-react";
 
 const menuItems = [
@@ -16,6 +17,8 @@ const menuItems = [
   { icon: BadgeDollarSign, label: "Payments", path: "/employer/payments" },
   { icon: Award, label: "ESOPS/RSU", path: "/employer/esops" },
   { icon: Settings, label: "Settings", path: "/employer/settings" },
+  { icon: Bot, label: "PayZoll Agent", path: "/employer/agent" },
+
 ];
 
 export default function Sidebar({
