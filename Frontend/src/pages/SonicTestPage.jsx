@@ -16,26 +16,39 @@ export default function SonicTestPage() {
     const [paying, setPaying] = useState(false);
     const [transactionHash, setTransactionHash] = useState([]);
     const [messages, setMessages] = useState([
-        { type: 'bot', content: 'Hello! I\'m your AI Payroll Assistant. I can help you manage and process payroll transactions.' }
+        { type: 'bot', content: 'Hello! I\'m your AI Payroll Assistant. I can help you manage and process payroll transactions. I will get the available payrolls.' }
     ]);
 
     useEffect(() => {
-        fetchPayrollData();
-    }, [provider]);
+        setTimeout(() => {
+            fetchPayrollData();
+            
+        },2000)
+    },[]);
 
-    const fetchPayrollData = () => {
+
+    const fetchPayrollData = async () => {
         try {
-            const dummyEmployees = [
-                { name: "ABH", accountId: "0xF947782C0CB4d3afa57912DA235894563950E2F4", salary: "0.1" },
-                { name: "VBH", accountId: "0x2a5470B7CdB77bcb950015BB19CcDBc6AE8B26C3", salary: "0.1" },
-            ];
+            const token = localStorage.getItem("token");
+            const response = await axios.get(
+                `${backendDomain}/admin/get-all-empolyees`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
-            setEmployees(dummyEmployees.map(emp => ({
-                ...emp,
-                salary: String(emp.salary),
+            console.log("Responses", response.data.employee)
+            const employees = response.data.employee;
+
+            setEmployees(employees.map(emp => ({
+                name: emp.name,
+                accountId: emp.accountId,
+                salary: String(emp.salary.$numberDecimal),
             })));
 
-            setMessages(prev => [...prev,
+            setMessages([
             { type: 'bot', content: 'I\'ve fetched the payroll data. Would you like to review the details?' }
             ]);
         } catch (error) {
@@ -164,8 +177,8 @@ export default function SonicTestPage() {
                                     className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     <div className={`max-w-[80%] rounded-xl p-4 ${message.type === 'user'
-                                            ? 'bg-indigo-600 text-white shadow-lg'
-                                            : 'bg-[#334155] text-gray-200 shadow-md'
+                                        ? 'bg-indigo-600 text-white shadow-lg'
+                                        : 'bg-[#334155] text-gray-200 shadow-md'
                                         }`}>
                                         {message.content}
                                     </div>

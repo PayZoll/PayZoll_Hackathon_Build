@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
-  Bell,
-  LogOut,
-  Wallet,
-  DollarSign,
-  ArrowUpRight,
-  ArrowDownRight,
-  Repeat,
-  PiggyBank,
-  Landmark,
+  Bell
 } from "lucide-react";
 import QuickPanel from "../components/employee/QuickPanel";
 import EmployeeOverview from "../components/employee/EmployeeOverview";
@@ -111,13 +103,12 @@ export default function EmployeeDashboard() {
               ease: "linear",
             }}
             style={{
-              background: `radial-gradient(circle, ${
-                i === 0
+              background: `radial-gradient(circle, ${i === 0
                   ? "rgba(99,102,241,0.1)"
                   : i === 1
-                  ? "rgba(139,92,246,0.1)"
-                  : "rgba(168,85,247,0.1)"
-              } 0%, transparent 70%)`,
+                    ? "rgba(139,92,246,0.1)"
+                    : "rgba(168,85,247,0.1)"
+                } 0%, transparent 70%)`,
               left: `${i * 30}%`,
               top: `${i * 20}%`,
             }}
@@ -151,14 +142,14 @@ export default function EmployeeDashboard() {
 
               {/* Actions */}
               <div className="flex items-center space-x-4">
-                
+
                 {/*LogOut*/}
                 <button
                   className="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 
                   text-white hover:shadow-lg hover:shadow-indigo-500/20 transition-all"
                   onClick={handleLogout}
                 >
-                <span>LogOut</span>
+                  <span>LogOut</span>
                 </button>
 
                 {/* Notifications */}
