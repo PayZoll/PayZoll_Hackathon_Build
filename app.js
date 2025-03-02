@@ -7,7 +7,7 @@ const { ethers } = require("ethers");
 const port = 5001;
 const prefix = "/api/v1";
 
-app.use(cors(c));
+app.use(cors());
 
 app.use(express.json());
 
