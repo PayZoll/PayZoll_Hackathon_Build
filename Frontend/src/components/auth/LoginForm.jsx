@@ -25,9 +25,7 @@ function LoginForm() {
     };
 
     console.log('Making request to:', `${backendDomain}/login`);
-    const response = await axios.post(`${backendDomain}/login`, loginData, {
-      timeout: 5000,
-    });
+    const response = await axios.post(`${backendDomain}/login`, loginData);
     if (!response.data.token) {
       alert("Wrong Input");
       return;
@@ -60,18 +58,16 @@ function LoginForm() {
             key={type}
             type="button"
             onClick={() => handleUserTypeChange(type)}
-            className={`flex-1 py-3 px-4 rounded-xl border ${
-              userType === type
+            className={`flex-1 py-3 px-4 rounded-xl border ${userType === type
                 ? "border-indigo-500 bg-indigo-500/10 text-white"
                 : "border-gray-700 text-gray-400 hover:border-indigo-500/50"
-            } transition-all flex items-center justify-center space-x-2 group cursor-pointer`}
+              } transition-all flex items-center justify-center space-x-2 group cursor-pointer`}
           >
             <Icon
-              className={`w-4 h-4 ${
-                userType === type
+              className={`w-4 h-4 ${userType === type
                   ? "text-indigo-400"
                   : "text-gray-400 group-hover:text-indigo-400"
-              } transition-colors`}
+                } transition-colors`}
             />
             <span>{label}</span>
           </button>
