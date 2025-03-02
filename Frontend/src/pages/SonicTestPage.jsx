@@ -78,7 +78,7 @@ export default function SonicTestPage() {
         const rpcUrl = CHAINS_BY_ID[network.chainId].rpcUrl;
 
         try {
-            const response = await fetch("http://localhost:5001/bulk-transfer", {
+            const response = await fetch(`${backendDomain}//bulk-transfer`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

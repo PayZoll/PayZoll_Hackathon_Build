@@ -24,7 +24,7 @@ export default function App() {
         <Route path="/employer/esops" element={<ESOPPage />} />
         <Route path="/employer/settings" element={<SettingsPage />} />
         <Route path="/lending" element={<LendingPage />} />
-        <Route path="/sonic" element={<SonicTestPage />} />
+        <Route path="/agent" element={<SonicTestPage />} />
       </Routes>
     </Web3Provider>
   );
