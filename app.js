@@ -7,33 +7,7 @@ const { ethers } = require("ethers");
 const port = 5001;
 const prefix = "/api/v1";
 
-// Allow multiple origins
-const allowedOrigins = [
-  "https://pay-zoll-edu-chain.vercel.app/",
-  "http://localhost:5173",
-];
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(null, true); // Temporarily allow all origins in development
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "X-Requested-With",
-    "Accept",
-  ],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
+app.use(cors(c));
 
 app.use(express.json());
 
