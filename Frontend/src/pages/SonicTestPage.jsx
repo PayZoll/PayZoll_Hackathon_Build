@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CHAINS_BY_ID } from "../lib/constants";
 import axios from "axios";
-import { ethers } from "ethers";
 import { backendDomain } from "../constant/domain";
 import { useWeb3 } from "../context/useWeb3";
-import { executeBulkTransfer } from "../blockchain/scripts/Token";
-import { verifyToken } from "../utils/jwt";
 import { Bot, Send, Wallet, Users, CircleDollarSign, ExternalLink, Loader2 } from "lucide-react";
 
 export default function SonicTestPage() {
@@ -22,9 +19,9 @@ export default function SonicTestPage() {
     useEffect(() => {
         setTimeout(() => {
             fetchPayrollData();
-            
-        },2000)
-    },[]);
+
+        }, 2000)
+    }, []);
 
 
     const fetchPayrollData = async () => {
@@ -49,7 +46,7 @@ export default function SonicTestPage() {
             })));
 
             setMessages([
-            { type: 'bot', content: 'I\'ve fetched the payroll data. Would you like to review the details?' }
+                { type: 'bot', content: 'I\'ve fetched the payroll data. Would you like to review the details?' }
             ]);
         } catch (error) {
             console.error("Error fetching payroll data:", error);
