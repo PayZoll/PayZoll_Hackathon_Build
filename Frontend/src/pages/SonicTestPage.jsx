@@ -75,15 +75,13 @@ export default function SonicTestPage() {
         const rpcUrl = CHAINS_BY_ID[network.chainId].rpcUrl;
 
         try {
-            const response = await fetch(`${backendDomain}/bulk-transfer`, {
-                method: "POST",
+            const response = await axios.post(`${backendDomain}/tfs/bulk-transfer`, {
+                rpcUrl,
+                employees,
+            }, {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    rpcUrl,
-                    employees,
-                }),
             });
 
             const data = await response.json();
