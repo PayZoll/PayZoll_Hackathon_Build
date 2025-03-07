@@ -13,6 +13,7 @@ import RecentActivity from "../components/employee/RecentActivity";
 import { useWeb3 } from "../context/useWeb3";
 import axios from "axios";
 import { backendDomain } from "../constant/domain";
+import TokenBridgeSection from "../components/TokenBridgeSection";
 
 export default function EmployeeDashboard() {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
@@ -219,6 +220,11 @@ export default function EmployeeDashboard() {
             {/* ESOP Section */}
             <div className="col-span-12 lg:col-span-6">
               <ESOPSection employeeTokenInfo={employeeTokenInfo} />
+            </div>
+
+            {/* Token Bridge Section */}
+            <div className="col-span-12 lg:col-span-6">
+              <TokenBridgeSection employeeTokenInfo={employeeTokenInfo} />
             </div>
 
             {/* Analytics Section */}
