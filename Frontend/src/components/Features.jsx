@@ -7,65 +7,54 @@ const CARD_WIDTH = 350;
 const CARD_HEIGHT = 350;
 const MARGIN = 20;
 const CARD_SIZE = CARD_WIDTH + MARGIN;
-
-const BREAKPOINTS = {
-  sm: 640,
-  lg: 1024,
-};
+const VISIBLE_CARDS = 3; // Only show 3 cards at a time
 
 const CardCarousel = () => {
   const [ref, { width }] = useMeasure();
   const [offset, setOffset] = useState(0);
 
-  const CARD_BUFFER =
-    width > BREAKPOINTS.lg ? 3 : width > BREAKPOINTS.sm ? 2 : 1;
-
+  const totalWidth = CARD_SIZE * items.length;
+  const visibleWidth = VISIBLE_CARDS * CARD_SIZE;
   const CAN_SHIFT_LEFT = offset < 0;
-
-  const CAN_SHIFT_RIGHT =
-    Math.abs(offset) < CARD_SIZE * (items.length - CARD_BUFFER);
+  const CAN_SHIFT_RIGHT = Math.abs(offset) < totalWidth - visibleWidth;
 
   const shiftLeft = () => {
     if (!CAN_SHIFT_LEFT) return;
-    setOffset((pv) => pv + CARD_SIZE);
+    setOffset((pv) => Math.min(pv + CARD_SIZE, 0));
   };
 
   const shiftRight = () => {
     if (!CAN_SHIFT_RIGHT) return;
-    setOffset((pv) => pv - CARD_SIZE);
+    setOffset((pv) => Math.max(pv - CARD_SIZE, -(totalWidth - visibleWidth)));
   };
 
   return (
-    <section id="features" ref={ref}>
-      <div className="relative overflow-hidden p-4">
-        {/* CARDS */}
-        <div className="mx-auto max-w-6xl mb-20">
-        <section className="flex flex-col items-center justify-center mt-20">
-      <div className="max-w-6xl text-center mb-20">
-        <h4 className="text-3xl md:text-7xl font-bold text-gray-100 leading-tight max-w-4xl mb-10 relative inline-block">
-          Why Choose <span className="relative">Us?
-            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-yellow-400"></span>
-          </span>
-            
-        </h4>
-      </div>
-      </section>
-          <motion.div
-            animate={{ x: offset }}
-            className="flex"
-          >
-            {items.map((item) => (
+    <section id="features" ref={ref} className="flex justify-center items-center py-10">
+      <div className="relative overflow-hidden p-4 w-[1100px]"> 
+        {/* Heading */}
+        <div className="text-center mb-10">
+          <h4 className="text-3xl md:text-5xl font-bold text-gray-100 leading-tight">
+            Why Choose <span className="relative">Us?
+              <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-yellow-400"></span>
+            </span>
+          </h4>
+        </div>
+
+        {/* Cards */}
+        <div className="relative w-full mx-auto">
+          <motion.div animate={{ x: offset }} className="flex">
+            {items.slice(0, 5).map((item) => ( // Ensure only relevant items are considered
               <Card key={item.id} {...item} />
             ))}
           </motion.div>
         </div>
 
-        {/* BUTTONS */}
+        {/* Buttons */}
         <>
           <motion.button
             initial={false}
             animate={{ x: CAN_SHIFT_LEFT ? "0%" : "-100%" }}
-            className="absolute left-0 top-[60%] z-30 rounded-r-xl bg-slate-100/30 p-3 pl-2 text-4xl text-white backdrop-blur-sm transition-all hover:pl-3"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-30 rounded-r-xl bg-slate-100/30 p-3 pl-2 text-4xl text-white backdrop-blur-sm transition-all hover:pl-3"
             onClick={shiftLeft}
           >
             <FiChevronLeft />
@@ -73,7 +62,7 @@ const CardCarousel = () => {
           <motion.button
             initial={false}
             animate={{ x: CAN_SHIFT_RIGHT ? "0%" : "100%" }}
-            className="absolute right-0 top-[60%] z-30 rounded-l-xl bg-slate-100/30 p-3 pr-2 text-4xl text-white backdrop-blur-sm transition-all hover:pr-3"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-30 rounded-l-xl bg-slate-100/30 p-3 pr-2 text-4xl text-white backdrop-blur-sm transition-all hover:pr-3"
             onClick={shiftRight}
           >
             <FiChevronRight />
@@ -87,7 +76,7 @@ const CardCarousel = () => {
 const Card = ({ url, category, title, description }) => {
   return (
     <div
-      className="relative shrink-0 cursor-pointer rounded-2xl  shadow-md transition-all hover:scale-[1.015] hover:shadow-xl"
+      className="relative shrink-0 cursor-pointer rounded-2xl shadow-md transition-all hover:scale-[1.015] hover:shadow-xl"
       style={{
         width: CARD_WIDTH,
         height: CARD_HEIGHT,
@@ -116,55 +105,34 @@ const items = [
     url: "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?auto=format&fit=crop&q=80&w=1200",
     category: "Mice",
     title: "Instant Global Transactions",
-    description:
-      "Execute payouts to your global workforce simultaneously, eliminating delays and reducing costs."
+    description: "Execute payouts to your global workforce simultaneously, eliminating delays and reducing costs.",
   },
   {
     id: 2,
     url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200",
     category: "Keyboards",
     title: "Privacy by Design",
-    description:
-      "Zero-Knowledge Proofs ensure complete data privacy while maintaining full compliance.",
+    description: "Zero-Knowledge Proofs ensure complete data privacy while maintaining full compliance.",
   },
   {
     id: 3,
     url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
     category: "Monitors",
     title: "Automated Compliance",
-    description:
-      "Smart contracts handle tax deductions and reporting automatically.",
+    description: "Smart contracts handle tax deductions and reporting automatically.",
   },
   {
     id: 4,
     url: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200",
     category: "Chairs",
     title: "ESOP Management",
-    description:
-      "Manage tokenized equity compensation with transparent claiming processes.",
+    description: "Manage tokenized equity compensation with transparent claiming processes.",
   },
   {
     id: 5,
     url: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&q=80&w=1200",
     category: "Lights",
     title: "Global Coverage",
-    description:
-      "Pay your team anywhere in the world with instant crypto transactions.",
+    description: "Pay your team anywhere in the world with instant crypto transactions.",
   },
-  {
-    id: 6,
-    url: "https://images.unsplash.com/photo-1556740739-87b5e5f16e57?auto=format&fit=crop&q=80&w=1200",
-    category: "Desks",
-    title: "Automated Payroll",
-    description:
-      "Sync your browser's HR data with payroll to automate calculations and payments.",
-  },
-  {
-    id: 7,
-    url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=1200",
-    category: "Desks",
-    title: "Enterprise Security",
-    description:
-      "Bank-grade encryption and multi-sig protection for your funds.",
-  }
 ];
