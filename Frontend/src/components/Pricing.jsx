@@ -20,11 +20,11 @@ const plans = [
     duration: 'tailored for you',
     features: [
       'Unlimited employees',
-      'Full feature access',
-      'Dedicated support',
-      'Custom integration',
-      'Advanced security', 
-      'SLA guarantee'
+      'Full feature access & SLA guarantee',
+      'Dedicated support & Advanced security',
+      'Custom integration ',
+      
+      
     ]
   }
 ];
@@ -47,37 +47,39 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`rounded-3xl p-8 backdrop-blur-sm transition-all duration-300 hover:transform hover:-translate-y-2 w-full max-w-md ${
+              className={`flex flex-col rounded-3xl p-8 backdrop-blur-sm transition-all duration-300 hover:transform hover:-translate-y-2 w-full max-w-md ${
                 plan.popular
                   ? 'bg-gradient-to-b from-indigo-600/90 to-purple-600/90 text-white shadow-xl shadow-indigo-500/20 border border-indigo-400/20'
                   : 'bg-crypto-card/60 border border-gray-800 hover:border-gray-700'
               }`}
             >
-              <div className="text-center mb-8">
-                {plan.popular && (
-                  <span className="bg-indigo-400/20 text-indigo-200 text-sm px-4 py-1 rounded-full mb-4 inline-block">
-                    Most Popular
-                  </span>
-                )}
-                <h3 className={`text-2xl font-bold mb-2 ${plan.popular ? 'text-white' : 'text-white'}`}>
-                  {plan.name}
-                </h3>
-                <div className="text-5xl font-bold mb-2">
-                  {plan.price}
+              <div className="flex-grow flex flex-col">
+                <div className="text-center mb-8">
+                  {plan.popular && (
+                    <span className="bg-indigo-400/20 text-indigo-200 text-sm px-4 py-1 rounded-full mb-4 inline-block">
+                      Most Popular
+                    </span>
+                  )}
+                  <h3 className={`text-2xl font-bold mb-2 ${plan.popular ? 'text-white' : 'text-white'}`}>
+                    {plan.name}
+                  </h3>
+                  <div className="text-5xl font-bold mb-2">
+                    {plan.price}
+                  </div>
+                  <div className={plan.popular ? 'text-indigo-200' : 'text-gray-400'}>
+                    {plan.duration}
+                  </div>
                 </div>
-                <div className={plan.popular ? 'text-indigo-200' : 'text-gray-400'}>
-                  {plan.duration}
-                </div>
+                
+                <ul className="space-y-4 mb-8 flex-grow">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-center">
+                      <Check className={`h-5 w-5 mr-3 ${plan.popular ? 'text-indigo-200' : 'text-indigo-400'}`} />
+                      <span className={plan.popular ? 'text-indigo-100' : 'text-gray-400'}>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              
-              <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center">
-                    <Check className={`h-5 w-5 mr-3 ${plan.popular ? 'text-indigo-200' : 'text-indigo-400'}`} />
-                    <span className={plan.popular ? 'text-indigo-100' : 'text-gray-400'}>{feature}</span>
-                  </li>
-                ))}
-              </ul>
               
               <button
                 className={`w-full py-4 rounded-2xl text-center transition-all duration-300 font-semibold ${

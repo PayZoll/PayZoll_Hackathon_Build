@@ -8,8 +8,8 @@ const sponsors = [
   "/images/logo1.png",
   "/images/logo2.png",
   "/images/logo3.png",
-  "/images/logo1.png",
-  "/images/logo2.png",
+  "/images/logo4.png",
+  "/images/logo5.png",
   "/images/logo3.png",
 ];
 
@@ -34,12 +34,12 @@ export default function Sponsors() {
             768: { slidesPerView: 4 },
             1024: { slidesPerView: 5 },
           }}
-          loop={true}
+          loop={true} // Enable infinite loop
           autoplay={{
-            delay: 200,
-            disableOnInteraction: false,
+            delay: 2000, // Autoplay delay in milliseconds
+            disableOnInteraction: false, // Continue autoplay even after user interaction
           }}
-          speed={1000}
+          speed={1000} // Animation speed in milliseconds (smooth transition)
           modules={[Autoplay]}
           className="flex items-center"
         >

@@ -29,7 +29,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="py-20 bg-gradient-to-b from-crypto-dark to-crypto-card relative overflow-hidden"
+      className="py-20  relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

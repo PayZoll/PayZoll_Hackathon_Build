@@ -4,17 +4,17 @@ const testimonials = [
   {
     name: "Delbert Dicki",
     position: "HR Officer at Mailchimp",
-    image: "/images/delbert.jpg",
-    companyLogo: "/images/mailchimp-logo.png",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150",
+ 
     feedback:
-      "My favorite thing about Paie is the compliance aspect. They make quarterly taxes, onboarding, and everything else so simple and easy, which saves me a ton of time.",
+      "My favorite thing about PayZoll is the compliance aspect. They make quarterly taxes, onboarding, and everything else so simple and easy, which saves me a ton of time.",
     positionClass: "translate-x-0", // No shift for 1st card
   },
   {
     name: "Chatalyne Devan",
     position: "HR Officer at DocuSign",
-    image: "/images/chatalyne.jpg",
-    companyLogo: "/images/docusign-logo.png",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150",
+    
     feedback:
       "As soon as I saw how easy it was to set everything up I liked it, but the first time I ever dealt with customer service is when I really knew we chose the right payroll company.",
     positionClass: "translate-x-10", // Shift right for 2nd card
@@ -22,10 +22,10 @@ const testimonials = [
   {
     name: "Marshall Beer",
     position: "HR Officer at Basecamp",
-    image: "/images/marshall.jpg",
-    companyLogo: "/images/basecamp-logo.png",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150",
+
     feedback:
-      "Paie helped me a lot especially with the attendance, so now the marketing team can check in and leave with the offsite application. The payroll process is also very fast.",
+      "PayZoll helped me a lot especially with the attendance, so now the marketing team can check in and leave with the offsite application. The payroll process is also very fast.",
     positionClass: "translate-x-5", // Shift left for 3rd card
   },
 ];
@@ -66,11 +66,7 @@ export default function Testimonials() {
                     <p className="text-gray-500 text-sm">{testimonial.position}</p>
                   </div>
                 </div>
-                <img
-                  src={testimonial.companyLogo}
-                  alt="Company Logo"
-                  className="w-16"
-                />
+                
               </div>
 
               {/* Testimonial Text */}

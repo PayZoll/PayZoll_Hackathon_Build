@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
-
+import HowItWorks from '../components/HowItWorks';
 import Pricing from '../components/Pricing';
 import Footer from '../components/Footer';
 import Sponsors from '../components/Sponsors';
@@ -17,7 +17,7 @@ export default function LandingPage() {
         <Hero />
         <Sponsors />
         <Features />
-        
+        <HowItWorks />
         
         <Testimonials />
         
