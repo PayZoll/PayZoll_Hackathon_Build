@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        'crypto-dark': '#0A0B0D',
+        'crypto-dark': '#051025',
         'crypto-card': '#1A1B1F',
         'crypto-accent': '#6366F1',
         'crypto-success': '#10B981',

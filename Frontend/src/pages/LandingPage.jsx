@@ -2,12 +2,11 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
-import HowItWorks from '../components/HowItWorks';
-import TechnologySection from '../components/TechnologySection';
-import TestimonialsSection from '../components/TestimonialsSection';
-import CTASection from '../components/CTASection';
+
 import Pricing from '../components/Pricing';
 import Footer from '../components/Footer';
+import Sponsors from '../components/Sponsors';
+import Testimonials from '../components/TestimonialsSection';
 
 export default function LandingPage() {
   return (
@@ -16,11 +15,12 @@ export default function LandingPage() {
       <div className="relative">
         <Navbar />
         <Hero />
+        <Sponsors />
         <Features />
-        <HowItWorks />
-        <TechnologySection />
-        <TestimonialsSection />
-        <CTASection />
+        
+        
+        <Testimonials />
+        
         <Pricing />
         <Footer />
       </div>

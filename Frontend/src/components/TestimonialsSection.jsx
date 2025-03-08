@@ -1,125 +1,91 @@
-import React, { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import React from "react";
 
 const testimonials = [
   {
-    quote:
-      "PayZoll has made payroll seamless and secure for our global team. It's the future of workforce management!",
-    author: "Sarah Chen",
-    position: "CEO, TechForward",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150",
+    name: "Delbert Dicki",
+    position: "HR Officer at Mailchimp",
+    image: "/images/delbert.jpg",
+    companyLogo: "/images/mailchimp-logo.png",
+    feedback:
+      "My favorite thing about Paie is the compliance aspect. They make quarterly taxes, onboarding, and everything else so simple and easy, which saves me a ton of time.",
+    positionClass: "translate-x-0", // No shift for 1st card
   },
   {
-    quote:
-      "The integration of blockchain technology has eliminated all our cross-border payment hassles. Simply revolutionary!",
-    author: "Michael Rodriguez",
-    position: "HR Director, GlobalTech Solutions",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150",
+    name: "Chatalyne Devan",
+    position: "HR Officer at DocuSign",
+    image: "/images/chatalyne.jpg",
+    companyLogo: "/images/docusign-logo.png",
+    feedback:
+      "As soon as I saw how easy it was to set everything up I liked it, but the first time I ever dealt with customer service is when I really knew we chose the right payroll company.",
+    positionClass: "translate-x-10", // Shift right for 2nd card
   },
   {
-    quote:
-      "Zero-knowledge proofs ensure our payroll data stays confidential while maintaining transparency. Exactly what we needed!",
-    author: "Emma Thompson",
-    position: "CFO, Innovation Labs",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150",
+    name: "Marshall Beer",
+    position: "HR Officer at Basecamp",
+    image: "/images/marshall.jpg",
+    companyLogo: "/images/basecamp-logo.png",
+    feedback:
+      "Paie helped me a lot especially with the attendance, so now the marketing team can check in and leave with the offsite application. The payroll process is also very fast.",
+    positionClass: "translate-x-5", // Shift left for 3rd card
   },
 ];
 
-const TestimonialsSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
-  };
-
+export default function Testimonials() {
   return (
-    <section className="py-20 bg-crypto-dark relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Trusted by Forward-Thinking Businesses
+    <section className="bg-black py-16 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
+        {/* Left Section: Heading & Illustration */}
+        <div className=" flex flex-col space-y-6">
+          <h2 className="text-3xl md:text-6xl font-bold text-white leading-tight ">
+            So Ready to <br /> Experience Payzoll?
           </h2>
-          <p className="text-xl text-gray-400">
-            Join the companies revolutionizing their payroll management
-          </p>
+          <img
+            src="/images/testimonial.gif" // Replace with the path to your GIF
+            alt="Thumbs Up"
+            className="w-64 md:w-96"
+          />
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
-          <button
-            onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 text-gray-400 hover:text-indigo-400 transition-colors"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
-
-          <div className="overflow-hidden">
+        {/* Right Section: Testimonials */}
+        <div className="md:w-2/3 relative flex flex-col space-y-6">
+          {testimonials.map((testimonial, index) => (
             <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              key={index}
+              className={`bg-white shadow-lg p-6 rounded-xl flex flex-col space-y-4 relative ${testimonial.positionClass}`}
             >
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="w-full flex-shrink-0 px-8">
-                  <div className="bg-crypto-card rounded-2xl p-8 border border-gray-800 hover:border-indigo-600/50 transition-all">
-                    <div className="flex flex-col items-center">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.author}
-                        className="w-20 h-20 rounded-full mb-6 object-cover ring-2 ring-indigo-500/20"
-                      />
-                      <blockquote className="text-xl text-gray-300 text-center mb-6 italic">
-                        "{testimonial.quote}"
-                      </blockquote>
-                      <cite className="not-italic">
-                        <p className="text-lg font-semibold text-white">
-                          {testimonial.author}
-                        </p>
-                        <p className="text-indigo-400">
-                          {testimonial.position}
-                        </p>
-                      </cite>
-                    </div>
+              {/* Profile Info */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-gray-900 font-semibold">{testimonial.name}</p>
+                    <p className="text-gray-500 text-sm">{testimonial.position}</p>
                   </div>
                 </div>
-              ))}
+                <img
+                  src={testimonial.companyLogo}
+                  alt="Company Logo"
+                  className="w-16"
+                />
+              </div>
+
+              {/* Testimonial Text */}
+              <p className="text-gray-600 text-lg">{testimonial.feedback}</p>
             </div>
-          </div>
+          ))}
 
-          <button
-            onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 text-gray-400 hover:text-indigo-400 transition-colors"
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
-
-          <div className="flex justify-center mt-8 gap-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  currentIndex === index
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-600"
-                    : "bg-gray-700"
-                }`}
-                onClick={() => setCurrentIndex(index)}
-              />
-            ))}
+          {/* Pagination Dots (Static) */}
+          <div className="absolute right-[-20px] top-1/2 transform -translate-y-1/2 flex flex-col space-y-2">
+            <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default TestimonialsSection;
+}

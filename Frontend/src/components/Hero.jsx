@@ -1,72 +1,67 @@
 import React from 'react';
-import { ArrowRight, Wallet2 } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl animate-glow"></div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8 relative z-10">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/20 bg-indigo-500/10 text-indigo-300">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-              </span>
-              <span className="text-sm">Web3 Payroll Solution</span>
-            </div>
+    <section id="home" className="flex flex-col items-center text-center py-16 px-6">
+      {/* Heading */}
+      <h1 className="text-3xl md:text-7xl font-bold text-gray-100 leading-tight max-w-4xl mt-20">
+        Payroll made easy, <br />
+        effortless and seamless.
+        <span className="relative inline-block">
+          <span className="absolute bottom-1 left-0 w-full h-2 bg-yellow-400 -z-10"></span>
+        </span>
+      </h1>
 
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                Decentralized
-              </span>
-              <br />
-              <span className="text-white">
-                Payroll Protocol
-              </span>
-            </h1>
-            
-            <p className="text-xl text-gray-400 leading-relaxed">
-              Experience the future of payroll with blockchain-powered instant global payments, zero-knowledge privacy, and complete automation.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 rounded-xl hover:shadow-xl hover:shadow-indigo-500/20 transition-all flex items-center justify-center">
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              
-              <button className="px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
-                Read Docs
-              </button>
-            </div>
+      {/* Subtitle */}
+      <p className="text-gray-500 text-md max-w-2xl mt-6">
+        Experience the future of payroll with blockchain-powered instant global payments, zero-knowledge privacy, and complete automation.
+      </p>
 
-            <div className="flex items-center gap-8 pt-8">
-              <div className="flex flex-col">
-                <span className="text-2xl font-bold">$100M+</span>
-                <span className="text-gray-400">Total Volume</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-bold">50k+</span>
-                <span className="text-gray-400">Transactions</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-bold">10k+</span>
-                <span className="text-gray-400">Users</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-conic from-indigo-500/40 via-purple-500/40 to-indigo-500/40 rounded-full filter blur-3xl opacity-30"></div>
-            <div className="relative animate-float">
-              <Wallet2 className="w-full h-full text-indigo-400" />
-            </div>
-          </div>
-        </div>
+      {/* Buttons */}
+      <div className="mt-6 flex flex-col md:flex-row gap-4">
+        <button className="bg-yellow-500 text-black font-semibold px-6 py-3 rounded-md shadow-md hover:bg-yellow-600 transition">
+          Try Free Trial
+        </button>
+        <button className="border border-gray-200 text-gray-200 font-semibold px-6 py-3 rounded-md hover:bg-gray-100 hover:text-gray-900 transition">
+          Request Demo
+        </button>
       </div>
+
+      {/* Image Container - Hidden on Mobile 
+      <div className="hidden md:grid grid-cols-3 gap-6  mt-12">
+        <div className="bg-gray-50 w-50 h-100 rounded-lg overflow-hidden">
+          <img src="/images/dashboard.png" alt="Image 1" className="w-full h-full object-cover" />
+        </div>
+        <div className="bg-gray-400 w-500 h-500 rounded-lg overflow-hidden">
+          <img src="/images/dashboard.png" alt="Image 2" className="w-full h-full object-cover" />
+        </div>
+        <div className="bg-gray-300 w-50 h-10 rounded-lg overflow-hidden">
+          <img src="/path/to/image3.jpg" alt="Image 3" className="w-full h-full object-cover" />
+        </div>
+      </div>*/}
+      <div className='flex justify-center items-center w-full h-screen text-white p-6'>
+        <div className='flex flex-col w-1/6 h-full space-y-6 mx-5 my-5 gap-5 justify-center'>
+            <div className='w-full h-1/3 rounded-lg overflow-hidden shadow-lg '>
+                <img src="/images/hero1.jpg" alt="image 1" className='w-full h-full object-cover' />
+            </div>
+            <div className='w-full h-1/3 rounded-lg overflow-hidden shadow-lg '>
+                <img src="/images/hero4.png" alt="image 2" className='w-full h-full object-cover' />
+            </div>
+        </div>
+        <div className='w-full h-full flex justify-center items-center'>
+            <div className='w-full h-full rounded-lg overflow-hidden  '>
+                <img src="/images/dashboard.png" alt="big image" className='w-full h-full object-contain' />
+            </div>
+        </div>
+        <div className='flex flex-col w-1/6 h-full space-y-6 mx-5 my-5 gap-5 justify-center '>
+            <div className='w-full h-1/3 rounded-lg overflow-hidden shadow-lg'>
+                <img src="/images/hero3.jpg" alt="image 3" className='w-full h-full object-cover' />
+            </div>
+            <div className='w-full h-1/3 rounded-lg overflow-hidden shadow-lg '>
+                <img src="/images/hero2.jpg" alt="image 4" className='w-full h-full object-cover' />
+            </div>
+        </div>
     </div>
+    </section>
   );
 }

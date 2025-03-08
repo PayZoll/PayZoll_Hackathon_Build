@@ -13,20 +13,7 @@ const plans = [
       'Basic analytics'
     ]
   },
-  {
-    name: 'Standard',
-    price: '$99',
-    duration: 'per month',
-    popular: true,
-    features: [
-      'Up to 50 employees',
-      'Advanced payroll features',
-      'Priority support',
-      'Advanced analytics',
-      'Custom payment schedules',
-      'Multi-currency support'
-    ]
-  },
+  
   {
     name: 'Enterprise',
     price: 'Custom',
@@ -44,12 +31,12 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-20 bg-crypto-dark relative">
+    <section id="pricing" className="mt-20  relative">
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Simple, Transparent Pricing
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">
+            Start Enjoying PayZoll Today
           </h2>
           <p className="text-xl text-gray-400">
             Choose the perfect plan for your business
