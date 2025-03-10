@@ -29,35 +29,37 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="py-20  relative overflow-hidden"
+      className="relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            A Smarter Way to Pay Your Team
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            A Smarter Way to Pay
           </h2>
-          <p className="text-xl text-gray-400">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Get started with PayZoll in four simple steps
           </p>
         </div>
 
-        <div className="relative">
+        <div className="relative py-8">
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 transform -translate-y-1/2 hidden lg:block"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {steps.map((step, index) => (
               <div key={index} className="relative">
-                <div className="bg-crypto-card rounded-2xl p-8 border border-gray-800 hover:border-indigo-600/50 hover:shadow-xl hover:shadow-indigo-500/10 transition-all">
-                  <div className="mb-6">
+                <div className="bg-crypto-card rounded-xl p-8 border border-gray-800 h-full">
+                  <div className="mb-8 flex justify-center">
                     <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
-                      <step.icon className="h-8 w-8 text-white" />
+                      <step.icon className="h-7 w-7 text-white" />
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-400">{step.description}</p>
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-white mb-3">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-400 text-base leading-relaxed">{step.description}</p>
+                  </div>
                 </div>
               </div>
             ))}

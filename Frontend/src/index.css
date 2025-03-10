@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +8,8 @@
 :root {
   --crypto-dark: #0A0B0D;
   --crypto-card: #1A1B1F;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
 }
 
 body {
@@ -13,6 +18,22 @@ body {
   background-color: var(--crypto-dark);
   color: white;
   overflow-x: hidden;
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #4F46E5 0%, #9333EA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 @layer utilities {
@@ -25,7 +46,7 @@ body {
 
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  50% { transform: translateY(-10px); }
   100% { transform: translateY(0px); }
 }
 
@@ -110,7 +131,7 @@ body {
 /* Responsive padding */
 @media (max-width: 1024px) {
   .responsive-padding {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 }
 
@@ -131,4 +152,37 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 rounded-xl transition-all;
+}
+
+.btn-secondary {
+  @apply px-8 py-4 rounded-xl bg-white/5 border border-white/10 transition-colors;
+}
+
+/* Card styles */
+.card-glow {
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.1);
+}
+
+/* Glassmorphism */
+.glass-effect {
+  @apply backdrop-blur-lg bg-white/5 border border-white/10;
+}
+
+/* Gradient border */
+.gradient-border {
+  position: relative;
+  border-radius: 0.75rem;
+  padding: 1px;
+  background: linear-gradient(90deg, #4F46E5, #9333EA);
+}
+
+.gradient-border-content {
+  border-radius: 0.7rem;
+  background: var(--crypto-card);
+  height: 100%;
 }
