@@ -5,81 +5,60 @@ const testimonials = [
     name: "Delbert Dicki",
     position: "HR Officer at Mailchimp",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150",
- 
     feedback:
       "My favorite thing about PayZoll is the compliance aspect. They make quarterly taxes, onboarding, and everything else so simple and easy, which saves me a ton of time.",
-    positionClass: "translate-x-0", // No shift for 1st card
   },
   {
     name: "Chatalyne Devan",
     position: "HR Officer at DocuSign",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150",
-    
     feedback:
       "As soon as I saw how easy it was to set everything up I liked it, but the first time I ever dealt with customer service is when I really knew we chose the right payroll company.",
-    positionClass: "translate-x-10", // Shift right for 2nd card
   },
   {
     name: "Marshall Beer",
     position: "HR Officer at Basecamp",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150",
-
     feedback:
       "PayZoll helped me a lot especially with the attendance, so now the marketing team can check in and leave with the offsite application. The payroll process is also very fast.",
-    positionClass: "translate-x-5", // Shift left for 3rd card
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="bg-black py-16 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
-        {/* Left Section: Heading & Illustration */}
-        <div className=" flex flex-col space-y-6">
-          <h2 className="text-3xl md:text-6xl font-bold text-white leading-tight ">
-            So Ready to <br /> Experience Payzoll?
+    <section id="testimonials">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            What Our <span className="gradient-text">Clients Say</span>
           </h2>
-          <img
-            src="/images/testimonial.gif" // Replace with the path to your GIF
-            alt="Thumbs Up"
-            className="w-64 md:w-96"
-          />
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            Hear from businesses that have transformed their payroll
+          </p>
         </div>
-
-        {/* Right Section: Testimonials */}
-        <div className="md:w-2/3 relative flex flex-col space-y-6">
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`bg-white shadow-lg p-6 rounded-xl flex flex-col space-y-4 relative ${testimonial.positionClass}`}
+              className="bg-crypto-card rounded-xl p-8 border border-gray-800 h-full"
             >
+              <p className="text-gray-300 text-base leading-relaxed mb-8">{testimonial.feedback}</p>
+              
               {/* Profile Info */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <div>
-                    <p className="text-gray-900 font-semibold">{testimonial.name}</p>
-                    <p className="text-gray-500 text-sm">{testimonial.position}</p>
-                  </div>
+              <div className="flex items-center space-x-4">
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full object-cover border border-gray-700"
+                />
+                <div>
+                  <p className="text-white font-medium">{testimonial.name}</p>
+                  <p className="text-gray-400 text-sm mt-1">{testimonial.position}</p>
                 </div>
-                
               </div>
-
-              {/* Testimonial Text */}
-              <p className="text-gray-600 text-lg">{testimonial.feedback}</p>
             </div>
           ))}
-
-          {/* Pagination Dots (Static) */}
-          <div className="absolute right-[-20px] top-1/2 transform -translate-y-1/2 flex flex-col space-y-2">
-            <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
-            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-          </div>
         </div>
       </div>
     </section>
