@@ -47,9 +47,6 @@ export default function Navbar() {
             <a href="#how-it-works" className="text-gray-400 hover:text-indigo-400 transition-colors">
               How It Works
             </a>
-            <a href="/agent" className="text-gray-400 hover:text-indigo-400 transition-colors">
-              Payzoll Agent
-            </a>
             <a href="#pricing" className="text-gray-400 hover:text-indigo-400 transition-colors">
               Pricing
             </a>

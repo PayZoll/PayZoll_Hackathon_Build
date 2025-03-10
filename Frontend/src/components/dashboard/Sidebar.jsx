@@ -43,7 +43,7 @@ export default function Sidebar({
             </h1>
           </Link>
           <Link
-            to="/agent"
+            to="https://web-agent-client.onrender.com"
             className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg hover:shadow-indigo-500/20 transition-all"
           >
             Payroll Agent
