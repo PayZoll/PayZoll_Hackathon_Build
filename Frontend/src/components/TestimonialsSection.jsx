@@ -26,8 +26,8 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials">
-      <div className="max-w-6xl mx-auto">
+    <section id="testimonials" className="flex flex-col items-center w-full">
+      <div className="max-w-6xl mx-auto w-full">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             What Our <span className="gradient-text">Clients Say</span>
@@ -41,9 +41,9 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-crypto-card rounded-xl p-8 border border-gray-800 h-full"
+              className="bg-crypto-card rounded-xl p-8 border border-gray-800 h-full flex flex-col"
             >
-              <p className="text-gray-300 text-base leading-relaxed mb-8">{testimonial.feedback}</p>
+              <p className="text-gray-300 text-base leading-relaxed mb-8 flex-grow">{testimonial.feedback}</p>
               
               {/* Profile Info */}
               <div className="flex items-center space-x-4">

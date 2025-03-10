@@ -29,10 +29,10 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden flex flex-col items-center"
     >
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             A Smarter Way to Pay
@@ -43,15 +43,15 @@ export default function HowItWorks() {
         </div>
 
         <div className="relative py-8">
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 transform -translate-y-1/2 hidden lg:block"></div>
+          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-indigo-600 transform -translate-y-1/2 hidden lg:block"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {steps.map((step, index) => (
               <div key={index} className="relative">
-                <div className="bg-crypto-card rounded-xl p-8 border border-gray-800 h-full">
+                <div className="bg-crypto-card rounded-xl p-8 border border-purple-900/20 h-full">
                   <div className="mb-8 flex justify-center">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
-                      <step.icon className="h-7 w-7 text-white" />
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center">
+                      <step.icon className="h-7 w-7 text-purple-300" />
                     </div>
                   </div>
                   <div className="text-center">

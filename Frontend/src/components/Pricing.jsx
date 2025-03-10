@@ -30,9 +30,9 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="relative bg-gradient-to-b from-transparent to-crypto-dark/50">
+    <section id="pricing" className="relative bg-gradient-to-b from-transparent to-crypto-dark/50 flex flex-col items-center w-full">
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Start Enjoying <span className="gradient-text">PayZoll Today</span>
@@ -48,14 +48,14 @@ export default function Pricing() {
               key={index}
               className={`flex flex-col rounded-xl p-8 w-full max-w-md ${
                 plan.popular
-                  ? 'bg-crypto-card border-2 border-indigo-500/20'
+                  ? 'bg-crypto-card border-2 border-purple-500/20'
                   : 'bg-crypto-card border border-gray-800'
               }`}
             >
               <div className="flex-grow flex flex-col">
                 <div className="text-center mb-8">
                   {plan.popular && (
-                    <span className="bg-indigo-500/10 text-indigo-300 text-sm px-4 py-1 rounded-full mb-4 inline-block">
+                    <span className="bg-purple-500/10 text-purple-300 text-sm px-4 py-1 rounded-full mb-4 inline-block">
                       Most Popular
                     </span>
                   )}
@@ -73,7 +73,7 @@ export default function Pricing() {
                 <ul className="space-y-4 mb-8 flex-grow">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
-                      <Check className="h-5 w-5 mr-3 text-indigo-400" />
+                      <Check className="h-5 w-5 mr-3 text-purple-400" />
                       <span className="text-gray-400 text-base">{feature}</span>
                     </li>
                   ))}

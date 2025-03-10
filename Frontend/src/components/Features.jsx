@@ -29,8 +29,8 @@ const CardCarousel = () => {
   };
 
   return (
-    <section id="features" ref={ref}>
-      <div className="relative overflow-hidden mx-auto"> 
+    <section id="features" ref={ref} className="flex flex-col items-center">
+      <div className="relative overflow-hidden mx-auto w-full"> 
         {/* Heading */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-100 leading-tight mb-4">
@@ -55,7 +55,7 @@ const CardCarousel = () => {
           <motion.button
             initial={false}
             animate={{ x: CAN_SHIFT_LEFT ? "0%" : "-100%" }}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-30 rounded-r-xl glass-effect p-4 pl-3 text-4xl text-white"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-30 rounded-r-xl glass-effect p-4 pl-3 text-4xl text-purple-400"
             onClick={shiftLeft}
           >
             <FiChevronLeft />
@@ -63,7 +63,7 @@ const CardCarousel = () => {
           <motion.button
             initial={false}
             animate={{ x: CAN_SHIFT_RIGHT ? "0%" : "100%" }}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-30 rounded-l-xl glass-effect p-4 pr-3 text-4xl text-white"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-30 rounded-l-xl glass-effect p-4 pr-3 text-4xl text-purple-400"
             onClick={shiftRight}
           >
             <FiChevronRight />
@@ -88,7 +88,7 @@ const Card = ({ url, category, title, description }) => {
       }}
     >
       <div className="absolute inset-0 z-20 rounded-2xl bg-gradient-to-b from-black/90 via-black/60 to-black/0 p-8 text-white">
-        <span className="text-xs font-semibold uppercase tracking-wider text-indigo-300">
+        <span className="text-xs font-semibold uppercase tracking-wider text-purple-300">
           {category}
         </span>
         <p className="my-3 text-2xl font-bold">{title}</p>
